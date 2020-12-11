@@ -3,6 +3,6 @@ from .models import Certificate
 
 class CertificateAdmin(admin.ModelAdmin):
 
-    fields = ('name' , 'status', 'pdf')
+    fields = ('name' , 'internal_num', 'qr_code', 'status', 'pdf')
 
 admin.site.register(Certificate, CertificateAdmin)
