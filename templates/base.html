@@ -1,13 +1,49 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>{% block title %}Certificate{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link href='{% static "css/bootstrap.min.css" %}' rel="stylesheet">
+    <link href='{% static "/open-iconic/font/css/open-iconic.css" %}' rel="stylesheet">
 </head>
-    <body>
-        <div class="container">
-            {% block content %}
-            {% endblock content %}
+
+<body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg text-center">
+          <div class="container-fluid">
+            <ul class="nav navbar-nav container">
+              <li></li><a class="navbar-brand custom_title" href="#">SAH</a></li>
+              <li><a id="len1" class="hoverable m-1 nav-item nav-link btn border-0" href="{% url 'home' %}"">Home</a></li>
+              <li><a id="len2" class="hoverable m-1 nav-item nav-link btn border-0" href="#">About</a></li>
+              {% if user.is_authenticated %}
+              <li><a id="len3" class="hoverable m-1 nav-item nav-link btn border-0" href="#">Certificates</a></li>
+              <li><a id="len4" class="hoverable m-1 nav-item nav-link btn border-0" href="{% url 'logout' %}">Log out</a></li>
+              {% else %}
+              <li><a id="len3" class="hoverable m-1 nav-item nav-link btn border-0" href="{% url 'login' %}">Log In</a></li>
+              <li><a id="len4" class="hoverable m-1 nav-item nav-link btn border-0" href="{% url 'signup' %}">Sign up</a></li>
+              {% endif %}
+            </ul>
+          </div>
+        </nav>
+        <div id="what-the-hell-is-this">
+          <div class="page-title">
+            <p class="lead">
+            </p>
+          </div>
         </div>
-    </body>
+      </div>
+    <div class="container">
+        {% block content %}
+        {% endblock content %}
+    </div>
+    {% block project_js %}
+    <script src='{% static "js/jquery.js" %}'></script>
+    <script src='{% static "js/bootstrap.js" %}'></script>
+    <script src="{% static 'js/base.js' %}"></script>
+    {% endblock project_js %}
+</body>
+
 </html>
