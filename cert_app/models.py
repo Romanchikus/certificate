@@ -11,16 +11,25 @@ def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/public_num/<filename>
     return 'user_{0}/{1}'.format(instance.public_num, filename)
 
+class CertificateManager(models.Manager):
+
+    def create(self, **obj_data):
+
+        obj_data['qr_code'] = self.generate_qrcode(obj_data['public_num'])
+
+        # Now call the super method which does the actual creation
+        return super().create(**obj_data)
+        
+
 class Certificate(models.Model):
 
     name = models.CharField("name", max_length=50)
     internal_num = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    public_num = models.URLField(default=uuid.uuid4, editable=False)
+    public_num = models.UUIDField(default=uuid.uuid4, editable=False)
     qr_code = models.ImageField(upload_to='qr_codes', blank=True)
     status = models.BooleanField(default=False)
-    pdf = models.FileField(upload_to=user_directory_path, null=True)
+    pdf = models.FileField(upload_to=user_directory_path,blank=True, null=True)
 
-    objects = CertificateManager()
 
     def generate_qrcode(self):
         qr = qrcode.QRCode(
@@ -40,14 +49,11 @@ class Certificate(models.Model):
         filebuffer = InMemoryUploadedFile(
             buffer, None, filename, 'image/png', buffer.len, None)
         self.qrcode.save(filename, filebuffer)
+        return self.qrcode
 
     def __str__(self):
-        return str(self.name)
+        return str(self.public_num)
 
     def get_absolute_url(self):
-        return reverse('certificates.details', args=[str(self.id)])
+        return reverse('add', kwargs=[str(self.pk)])
 
-class CertificateManager(models.Manager):
-
-    def generate_qrcode(self):
-        

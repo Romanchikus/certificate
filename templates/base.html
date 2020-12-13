@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link href='{% static "css/bootstrap.min.css" %}' rel="stylesheet">
     <link href='{% static "/open-iconic/font/css/open-iconic.css" %}' rel="stylesheet">
+    <script src='{% static "js/jquery.js" %}'></script>
+    <script src='{% static "js/bootstrap.js" %}'></script>
+    <script src="{% static 'js/base.js' %}"></script>
+    <script src="https://yastatic.net/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -19,7 +23,7 @@
               <li><a id="len1" class="hoverable m-1 nav-item nav-link btn border-0" href="{% url 'home' %}"">Home</a></li>
               <li><a id="len2" class="hoverable m-1 nav-item nav-link btn border-0" href="#">About</a></li>
               {% if user.is_authenticated %}
-              <li><a id="len3" class="hoverable m-1 nav-item nav-link btn border-0" href="#">Certificates</a></li>
+              <li><a id="len3" class="hoverable m-1 nav-item nav-link btn border-0" href="{% url 'list' %}">Certificates</a></li>
               <li><a id="len4" class="hoverable m-1 nav-item nav-link btn border-0" href="{% url 'logout' %}">Log out</a></li>
               {% else %}
               <li><a id="len3" class="hoverable m-1 nav-item nav-link btn border-0" href="{% url 'login' %}">Log In</a></li>
@@ -39,11 +43,7 @@
         {% block content %}
         {% endblock content %}
     </div>
-    {% block project_js %}
-    <script src='{% static "js/jquery.js" %}'></script>
-    <script src='{% static "js/bootstrap.js" %}'></script>
-    <script src="{% static 'js/base.js' %}"></script>
-    {% endblock project_js %}
+    
 </body>
 
 </html>
