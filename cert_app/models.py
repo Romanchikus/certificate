@@ -28,17 +28,8 @@ class Certificate(models.Model):
     public_num = models.UUIDField(default=uuid.uuid4, editable=False)
     qr_code = models.ImageField(upload_to='qr_codes', blank=True)
     status = models.BooleanField(default=False)
-    pdf = models.FileField(upload_to=user_directory_path, null=True)
+    pdf = models.FileField(upload_to=user_directory_path,blank=True, null=True)
 
-    # def pre_init(self, *args, **kw):
-    #    certificate = Certificate()
-    #    certificate.internal_num = uuid.uuid4()
-    #    certificate.qr_code = generate_qrcode(self)
-    
-    # def __init__(self):
-    #     super(Certificate, self).__init__(*args, **kwargs)
-    #     self.public_num = uuid.uuid4()
-    #     self.qr_code = self.generate_qrcode()
 
     def generate_qrcode(self):
         qr = qrcode.QRCode(
@@ -61,8 +52,8 @@ class Certificate(models.Model):
         return self.qrcode
 
     def __str__(self):
-        return str(self.name)
+        return str(self.public_num)
 
     def get_absolute_url(self):
-        return reverse('details', args=[str(self.id)])
+        return reverse('add', kwargs=[str(self.pk)])
 
