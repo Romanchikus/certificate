@@ -2,7 +2,7 @@
 {% block title %}Create Certificat{% endblock title %}
 
 {%block content%}
-<form class='col-md-6 offset-3' method="post">
+<form class='col-md-6 offset-3' method="post" enctype="multipart/form-data">
 
     <h2>Create Certificat</h2>
     {% csrf_token %}
@@ -35,7 +35,10 @@
         {% endif %}
     </div>
     <br>
-
-    <button class='btn btn-primary' type="submit">Save</button>
+    <button class='btn btn-primary' href="{% url 'delete' object.pk %}">
+        Cancel</button>
+    <button class='btn btn-primary' href="{% url 'publish' object.pk %}">
+        Publish </button>
+    <button class='btn btn-primary' type="submit">Save<span class="oi" data-glyph="plus"></span></button>
 </form>
 {%endblock content%}

@@ -1,7 +1,50 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block content %}
+
+<div class="table offset-3 col-md-5">
+    <table>
+        <tr>
+            <td><label for="disabledInput">Internal number</label>
+                <input type="text" readonly class="form-control-plaintext bg-success rounded" id="staticEmail"
+                    value="{{object.name}}"></td>
+        </tr>
+        <tr>
+            <td>
+                <label for="disabledInput">Internal number</label>
+                <input type="text" readonly class="form-control-plaintext bg-success rounded" id="staticEmail"
+                    value="{{object.internal_num}}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="disabledInput">Internal number</label>
+                <input type="text" readonly class="form-control-plaintext bg-success rounded" id="staticEmail"
+                    value="{{object.public_num}}">
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+                <label for="disabledInput">PDF</label>
+                {% if  object.pdf %}
+                <a class="btn btn-outline-info btn-sm float-right mr-2" href="{{ object.pdf.url}}" role="button"
+                    download><span class="oi oi-data-transfer-download"></span></a>
+                {%else%}
+                <label for="disabledInput">No exist</label>
+                {%endif%}
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Reviews
+                <span class="bg-success table-bordered float-right mr-2">{{object.reviews}}</span>
+            </td>
+        </tr>
+    </table>
+</div>
 
 
 

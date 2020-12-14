@@ -29,6 +29,7 @@ class Certificate(models.Model):
     qr_code = models.ImageField(upload_to='qr_codes', blank=True)
     status = models.BooleanField(default=False)
     pdf = models.FileField(upload_to=user_directory_path,blank=True, null=True)
+    reviews = models.IntegerField(default=0)
 
 
     def generate_qrcode(self):

@@ -6,12 +6,18 @@
 
 
 {% block content %}
-<form method="POST" action="{% url 'create' %}" id="cert-form">
-    {% csrf_token %}
-    <input type='submit'  class='btn btn-success' value='Create certificat'>
-</form>
+<div class=" offset-3 col-md-5">
+  <div class="text-right">
+    <form method="POST" action="{% url 'create' %}" id="cert-form">
+      {% csrf_token %}
+      <button class='btn btn-primary' type="submit">
+        <span class="oi" data-glyph="plus"></span>
+      </button>
+  </form>
+</div>
+
    <br>
-  <ul class="list-group offset-3 col-md-5">
+  <ul class="list-group">
     {% for cert in object_list %}
       <li class="list-group-item">
         <div class="row col-md-5">
@@ -29,4 +35,5 @@
       <li class="list-group-item">No certificates yet.</li>
     {% endfor %}
   </ul>
+</div>
 {% endblock content %}
