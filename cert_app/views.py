@@ -13,7 +13,7 @@ class HomePageView(TemplateView):
     template_name = 'home.html'
 
 
-class CreateCart(View):
+class CreateCert(View):
 
     def post(self, request):
         id=request.user.id
@@ -41,12 +41,25 @@ class AddCertView(UpdateView):
         context["object"] = self.object
         return context
     
+    def form_valid(self, form, status=False):
+        form.instance.status = status
+        return super().form_valid(form)
+
+    def publish(self):
+        pass
+    
 
 
 class DetailsCertView(DetailView):
 
-    template_name = 'certificate/add.html'
+    template_name = 'certificate/detail.html'
     model = Certificate
+
+    def dispatch(self, request, *args, **kwargs):
+        cert = Certificate.objects.filter(pk=kwargs["pk"]).first()
+        cert.reviews +=1
+        cert.save()
+        return super().dispatch(request, *args, **kwargs)
 
 
 class ListCertView(ListView):
