@@ -6,6 +6,7 @@ from django.urls import reverse
 import qrcode
 from io import StringIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.exceptions import ValidationError
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/public_num/<filename>
@@ -24,12 +25,25 @@ class CertificateManager(models.Manager):
 class Certificate(models.Model):
 
     name = models.CharField("name", max_length=50)
-    internal_num = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    emitter = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    internal_num = models.CharField(max_length=50, default=uuid.uuid4, editable=True)
     public_num = models.UUIDField(default=uuid.uuid4, editable=False)
     qr_code = models.ImageField(upload_to='qr_codes', blank=True)
-    status = models.BooleanField(default=False)
+    is_published = models.BooleanField(default=False)
     pdf = models.FileField(upload_to=user_directory_path,blank=True, null=True)
+    views_count = models.IntegerField(default=0)
 
+    class Meta:
+        unique_together = ("emitter", "internal_num")
+        constraints = [
+            models.UniqueConstraint(fields=['emitter', 'internal_num'], name='unique emitter')
+        ]
+
+    def validate_unique(self,exclude=None):
+        try:
+            super(Certificate,self).validate_unique()
+        except ValidationError as e:
+            raise ValidationError("Internal num is not unique")
 
     def generate_qrcode(self):
         qr = qrcode.QRCode(
@@ -55,5 +69,5 @@ class Certificate(models.Model):
         return str(self.public_num)
 
     def get_absolute_url(self):
-        return reverse('add', kwargs=[str(self.pk)])
+        return reverse('certificate_info', kwargs=[str(self.pk)])
 

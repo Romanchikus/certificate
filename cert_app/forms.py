@@ -10,4 +10,4 @@ class PreCertificate(ModelForm):
 
     class Meta:
         model = Certificate
-        fields = [  'internal_num','status',]
+        fields = [  'internal_num','is_published',]

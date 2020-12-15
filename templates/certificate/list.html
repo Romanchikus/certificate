@@ -6,27 +6,53 @@
 
 
 {% block content %}
-<form method="POST" action="{% url 'create' %}" id="cert-form">
-    {% csrf_token %}
-    <input type='submit'  class='btn btn-success' value='Create certificat'>
-</form>
-   <br>
-  <ul class="list-group offset-3 col-md-5">
+<div class=" offset-3 col-md-5">
+  <div class=" text-center">
+    <form method="POST" action="{% url 'create_certificate' %}" id="cert-form">
+      {% csrf_token %}Create certificate
+      <button class='btn btn-primary m-1 ' type="submit">
+        <span class="oi" data-glyph="plus"></span>
+      </button>
+  </form>
+  <form action="{% url 'search_certificates' %}" method="get" class="row  mx-1 my-1"> {% csrf_token %}
+    <div>
+      <input class="bg-light rounded col-sm-3 " name="name" type="text" placeholder="for name">
+      <input class="bg-light rounded col-sm-5" name="inter_num" type="text" placeholder="for internal number">
+      <button class="float-sm-right btn-sm btn-primary" type="submit">
+        <span class="oi oi-check"></span>
+      </button>
+    </div> </form>
+</div>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th>Name</th>
+        <th>Internal number</th>
+        <th>Public</th>
+        <th>Reviews</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
     {% for cert in object_list %}
-      <li class="list-group-item">
-        <div class="row col-md-5">
-          <div class="col-sm-7 float-left">
-            <a class="float-left" href="{% url 'detail' cert.pk %}">{{ cert.name }}</a></div>
-          <div class="col-sm-5 float-right">
-            <a class="btn btn-outline-danger float-right mx-1 my-1 btn-sm " href="{% url 'delete' cert.pk %}"
-               role="button"><span class="oi oi-trash"></span></a>
-            <a class="btn btn-outline-warning float-right btn-sm  mx-1 my-1" href="{% url 'add' cert.pk %}"
-               role="button"><span class="oi oi-pencil "></span></a>
-          </div>
-        </div>
-      </li>
+      <tr class="text-center">
+        <td class="col-sm-2 alert-primary">
+          <a class="alert-link" href="{% url 'certificate_info' cert.pk %}">{{ cert.name }}</a>
+        </td>
+        <td class="col-sm-2  alert-success"><span><a class="float-left alert-link" href="{% url 'certificate_info' cert.pk %}">
+          {{ cert.internal_num }}</a></span></td>
+        <td class="col-sm-2  alert-dark"><small><a class="float-left  alert-link " href="{% url 'certificate_info' cert.pk %}">
+            {{ cert.public_num}}</a></small></td>
+        <td class="col-sm-2 alert-info">{{ cert.views_count}}</td>
+        <td class="col-sm-2">
+          <a class="btn btn-danger mx-1 my-1 btn-sm " href="{% url 'delete_certificate' cert.pk %}"
+          role="button"><span class="oi oi-trash"></span></a>
+          <a class="btn btn-warning  btn-sm  mx-1 my-1" href="{% url 'add_certificate' cert.pk %}"
+              role="button"><span class="oi oi-pencil "></span></a>
+     </td>
+      </tr>
     {% empty %}
-      <li class="list-group-item">No certificates yet.</li>
-    {% endfor %}
-  </ul>
+        <tr class="list-group-item">No certificates yet.</tr>
+      {% endfor %}
+  </table>
+</div>
 {% endblock content %}
