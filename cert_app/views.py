@@ -18,7 +18,7 @@ class CreateCert(View):
     def post(self, request):
         id=request.user.id
         user = CustomUser.objects.get(id=id)
-        model = Certificate(internal_num= user)
+        model = Certificate(emitter= user)
         model.save()
         print(model.id)
         return HttpResponseRedirect(reverse("add",
@@ -31,7 +31,7 @@ class AddCertView(UpdateView):
 
     template_name = 'certificate/add.html'
     model = Certificate
-    fields = ['name', 'status', 'pdf']
+    fields = ['name', 'status', 'pdf', 'internal_num']
 
     def get_success_url(self):
         return reverse('list')
@@ -41,13 +41,23 @@ class AddCertView(UpdateView):
         context["object"] = self.object
         return context
     
-    def form_valid(self, form, status=False):
-        form.instance.status = status
-        return super().form_valid(form)
 
-    def publish(self):
-        pass
-    
+class PublishCertView(View):
+
+    # model = Certificate
+    # fields = ['name', 'status', 'pdf']
+
+    # def form_valid(self, form):
+    #     print('dfg')
+    #     form.instance.status = True
+    #     return super().form_valid(form)
+
+    def post(self, request):
+        id=request.POST['web_input']
+        print(id)
+        return super().post()
+
+
 
 
 class DetailsCertView(DetailView):
@@ -70,16 +80,16 @@ class ListCertView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         kwargs["cert_form"] = PreCertificate(
-            initial={ "internal_num": self.request.user}
+            initial={ "emitter": self.request.user}
         )
         return context
     
 
     def get_queryset(self, **kwargs):
         kwargs["cert_form"] = PreCertificate(
-            initial={ "internal_num": self.request.user}
+            initial={ "emitter": self.request.user}
         )
-        return self.model.objects.filter(internal_num=self.request.user)
+        return self.model.objects.filter(emitter=self.request.user)
     
 
 class DeleteCertView(DeleteView):

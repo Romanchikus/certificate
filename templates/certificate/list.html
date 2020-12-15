@@ -7,33 +7,44 @@
 
 {% block content %}
 <div class=" offset-3 col-md-5">
-  <div class="text-right">
+  <div class=" text-center">
     <form method="POST" action="{% url 'create' %}" id="cert-form">
-      {% csrf_token %}
-      <button class='btn btn-primary' type="submit">
+      {% csrf_token %}Create certificate
+      <button class='btn btn-primary m-1 ' type="submit">
         <span class="oi" data-glyph="plus"></span>
       </button>
   </form>
 </div>
-
-   <br>
-  <ul class="list-group">
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th>Name</th>
+        <th>Internal number</th>
+        <th>Public</th>
+        <th>Reviews</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
     {% for cert in object_list %}
-      <li class="list-group-item">
-        <div class="row col-md-5">
-          <div class="col-sm-7 float-left">
-            <a class="float-left" href="{% url 'detail' cert.pk %}">{{ cert.name }}</a></div>
-          <div class="col-sm-5 float-right">
-            <a class="btn btn-outline-danger float-right mx-1 my-1 btn-sm " href="{% url 'delete' cert.pk %}"
-               role="button"><span class="oi oi-trash"></span></a>
-            <a class="btn btn-outline-warning float-right btn-sm  mx-1 my-1" href="{% url 'add' cert.pk %}"
-               role="button"><span class="oi oi-pencil "></span></a>
-          </div>
-        </div>
-      </li>
+      <tr class="text-center">
+        <td class="col-sm-2 alert-primary">
+          <a class="alert-link" href="{% url 'detail' cert.pk %}">{{ cert.name }}</a>
+        </td>
+        <td class="col-sm-2  alert-success"><span><a class="float-left alert-link" href="{% url 'detail' cert.pk %}">
+          {{ cert.internal_num }}</a></span></td>
+        <td class="col-sm-2  alert-dark"><small><a class="float-left  alert-link " href="{% url 'detail' cert.pk %}">
+            {{ cert.public_num}}</a></small></td>
+        <td class="col-sm-2 alert-info">{{ cert.reviews}}</td>
+        <td class="col-sm-2">
+          <a class="btn btn-danger mx-1 my-1 btn-sm " href="{% url 'delete' cert.pk %}"
+          role="button"><span class="oi oi-trash"></span></a>
+          <a class="btn btn-warning  btn-sm  mx-1 my-1" href="{% url 'add' cert.pk %}"
+              role="button"><span class="oi oi-pencil "></span></a>
+     </td>
+      </tr>
     {% empty %}
-      <li class="list-group-item">No certificates yet.</li>
-    {% endfor %}
-  </ul>
+        <tr class="list-group-item">No certificates yet.</tr>
+      {% endfor %}
+  </table>
 </div>
 {% endblock content %}
