@@ -7,14 +7,22 @@
 
 {% block content %}
 <div class=" offset-3 col-md-5">
+<<<<<<< HEAD
   <div class=" text-center">
     <form method="POST" action="{% url 'create' %}" id="cert-form">
       {% csrf_token %}Create certificate
       <button class='btn btn-primary m-1 ' type="submit">
+=======
+  <div class="text-right">
+    <form method="POST" action="{% url 'create' %}" id="cert-form">
+      {% csrf_token %}
+      <button class='btn btn-primary' type="submit">
+>>>>>>> 17e42b30322b87c5ff6aa1fcb1d70de35297c1c6
         <span class="oi" data-glyph="plus"></span>
       </button>
   </form>
 </div>
+<<<<<<< HEAD
   <table class="table">
     <thead class="thead-dark">
       <tr>
@@ -25,6 +33,11 @@
         <th>Actions</th>
       </tr>
     </thead>
+=======
+
+   <br>
+  <ul class="list-group">
+>>>>>>> 17e42b30322b87c5ff6aa1fcb1d70de35297c1c6
     {% for cert in object_list %}
       <tr class="text-center">
         <td class="col-sm-2 alert-primary">
@@ -43,8 +56,14 @@
      </td>
       </tr>
     {% empty %}
+<<<<<<< HEAD
         <tr class="list-group-item">No certificates yet.</tr>
       {% endfor %}
   </table>
+=======
+      <li class="list-group-item">No certificates yet.</li>
+    {% endfor %}
+  </ul>
+>>>>>>> 17e42b30322b87c5ff6aa1fcb1d70de35297c1c6
 </div>
 {% endblock content %}

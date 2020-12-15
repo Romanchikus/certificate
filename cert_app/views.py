@@ -41,6 +41,13 @@ class AddCertView(UpdateView):
         context["object"] = self.object
         return context
     
+    def form_valid(self, form, status=False):
+        form.instance.status = status
+        return super().form_valid(form)
+
+    def publish(self):
+        pass
+    
 
 class PublishCertView(View):
 
