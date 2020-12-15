@@ -47,24 +47,6 @@ class AddCertView(UpdateView):
 
     def publish(self):
         pass
-    
-
-class PublishCertView(View):
-
-    # model = Certificate
-    # fields = ['name', 'status', 'pdf']
-
-    # def form_valid(self, form):
-    #     print('dfg')
-    #     form.instance.status = True
-    #     return super().form_valid(form)
-
-    def post(self, request):
-        id=request.POST['web_input']
-        print(id)
-        return super().post()
-
-
 
 
 class DetailsCertView(DetailView):
@@ -98,6 +80,22 @@ class ListCertView(ListView):
         )
         return self.model.objects.filter(emitter=self.request.user)
     
+
+class SearchCertView(ListView):
+
+    model = Certificate
+    template_name = 'certificate/list.html'
+    
+    def get_queryset(self):
+        name = self.request.GET.get('name', '')
+        inter_num = self.request.GET.get('inter_num', None)
+        qs =  Certificate.objects.all().filter(emitter=self.request.user)
+        if name:
+            qs = qs.filter(name__icontains=name)
+        if inter_num:
+            qs = qs.filter(internal_num__icontains=inter_num)
+        return qs
+
 
 class DeleteCertView(DeleteView):
     model = Certificate
