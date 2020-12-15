@@ -29,9 +29,9 @@
       <input type="text" readonly class="form-control bg-success rounded" id="staticEmail" value="{{object.public_num}}">
     </div>
     <div class="form-group">
-        {{ form.status.label_tag }} {{ form.status }}
-        {% if form.status.help_text %}
-            <small class="form-text text-muted">{{ form.status.help_text|safe }}</small>
+        {{ form.is_published.label_tag }} {{ form.is_published }}
+        {% if form.is_published.help_text %}
+            <small class="form-text text-muted">{{ form.is_published.help_text|safe }}</small>
         {% endif %}
     </div>
      <div class="form-group">
@@ -42,13 +42,9 @@
         {% endif %}
     </div>
     <br>
-    <button class='btn btn-primary' href="{% url 'delete' object.pk %}">
+    <button class='btn btn-primary' href="{% url 'delete_certificate' object.pk %}">
         Cancel</button>
-<<<<<<< HEAD
     <button class='btn btn-primary' onclick="publish()" type="submit" >
-=======
-    <button class='btn btn-primary' href="{% url 'publish' object.pk %}">
->>>>>>> 17e42b30322b87c5ff6aa1fcb1d70de35297c1c6
         Publish </button>
     <button class='btn btn-primary' type="submit">Save<span class="oi" data-glyph="plus"></span></button>
 </form>
@@ -57,7 +53,7 @@
 
 <script>  
     function publish()  {
-        document.getElementById("id_status").checked = true;
+        document.getElementById("id_is_published").checked = true;
     }
 </script>  
 

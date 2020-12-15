@@ -1,12 +1,12 @@
 from django.urls import path
-from .views import CreateCert, HomePageView, DetailsCertView, AddCertView, ListCertView, DeleteCertView, SearchCertView
+from .views import CreateCertificateView, HomePageView, DetailsCertificateView, AddCertificateView, ListCertificateView, DeleteCertificateView, SearchCertificateView
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
-    path('certificates', ListCertView.as_view(), name='list'),                         
-    path('certificates/create',CreateCert.as_view(), name='create'),
-    path('certificates/add/<int:pk>/', AddCertView.as_view(), name='add'),
-    path('certificates/<int:pk>/', DetailsCertView.as_view(), name='detail'),
-    path('certificates/delete/<int:pk>/', DeleteCertView.as_view(), name='delete'),
-    path('certificates/search', SearchCertView.as_view(), name='search'),
+    path('certificates', ListCertificateView.as_view(), name='list_of_certificates'),                         
+    path('certificates/create',CreateCertificateView.as_view(), name='create_certificate'),
+    path('certificates/add/<int:pk>/', AddCertificateView.as_view(), name='add_certificate'),
+    path('certificates/<int:pk>/', DetailsCertificateView.as_view(), name='certificate_info'),
+    path('certificates/delete/<int:pk>/', DeleteCertificateView.as_view(), name='delete_certificate'),
+    path('certificates/search', SearchCertificateView.as_view(), name='search_certificates'),
 ]

@@ -131,3 +131,4 @@ dmypy.json
 static/
 media/
 db.sqlite3
+**/**/migrations

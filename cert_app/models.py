@@ -29,12 +29,15 @@ class Certificate(models.Model):
     internal_num = models.CharField(max_length=50, default=uuid.uuid4, editable=True)
     public_num = models.UUIDField(default=uuid.uuid4, editable=False)
     qr_code = models.ImageField(upload_to='qr_codes', blank=True)
-    status = models.BooleanField(default=False)
+    is_published = models.BooleanField(default=False)
     pdf = models.FileField(upload_to=user_directory_path,blank=True, null=True)
-    reviews = models.IntegerField(default=0)
+    views_count = models.IntegerField(default=0)
 
     class Meta:
-       unique_together = ("emitter", "internal_num")
+        unique_together = ("emitter", "internal_num")
+        constraints = [
+            models.UniqueConstraint(fields=['emitter', 'internal_num'], name='unique emitter')
+        ]
 
     def validate_unique(self,exclude=None):
         try:
@@ -66,5 +69,5 @@ class Certificate(models.Model):
         return str(self.public_num)
 
     def get_absolute_url(self):
-        return reverse('add', kwargs=[str(self.pk)])
+        return reverse('certificate_info', kwargs=[str(self.pk)])
 

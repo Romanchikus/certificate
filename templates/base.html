@@ -24,7 +24,7 @@
               <li><a id="len1" class="hoverable m-1 nav-item nav-link btn border-0" href="{% url 'home' %}"">Home</a></li>
               <li><a id="len2" class="hoverable m-1 nav-item nav-link btn border-0" href="#">About</a></li>
               {% if user.is_authenticated %}
-              <li><a id="len3" class="hoverable m-1 nav-item nav-link btn border-0" href="{% url 'list' %}">Certificates</a></li>
+              <li><a id="len3" class="hoverable m-1 nav-item nav-link btn border-0" href="{% url 'list_of_certificates' %}">Certificates</a></li>
               <li><a id="len4" class="hoverable m-1 nav-item nav-link btn border-0" href="{% url 'logout' %}">Log out</a></li>
               {% else %}
               <li><a id="len3" class="hoverable m-1 nav-item nav-link btn border-0" href="{% url 'login' %}">Log In</a></li>

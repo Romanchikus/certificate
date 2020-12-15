@@ -13,7 +13,7 @@ class HomePageView(TemplateView):
     template_name = 'home.html'
 
 
-class CreateCert(View):
+class CreateCertificateView(View):
 
     def post(self, request):
         id=request.user.id
@@ -21,47 +21,40 @@ class CreateCert(View):
         model = Certificate(emitter= user)
         model.save()
         print(model.id)
-        return HttpResponseRedirect(reverse("add",
+        return HttpResponseRedirect(reverse("add_certificate",
                                         kwargs={'pk':model.pk},
                                     )
                             )
 
 
-class AddCertView(UpdateView):
+class AddCertificateView(UpdateView):
 
     template_name = 'certificate/add.html'
     model = Certificate
-    fields = ['name', 'status', 'pdf', 'internal_num']
+    fields = ['name', 'is_published', 'pdf', 'internal_num']
 
     def get_success_url(self):
-        return reverse('list')
+        return reverse('list_of_certificates')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["object"] = self.object
         return context
-    
-    def form_valid(self, form, status=False):
-        form.instance.status = status
-        return super().form_valid(form)
-
-    def publish(self):
-        pass
 
 
-class DetailsCertView(DetailView):
+class DetailsCertificateView(DetailView):
 
     template_name = 'certificate/detail.html'
     model = Certificate
 
     def dispatch(self, request, *args, **kwargs):
         cert = Certificate.objects.filter(pk=kwargs["pk"]).first()
-        cert.reviews +=1
+        cert.views_count +=1
         cert.save()
         return super().dispatch(request, *args, **kwargs)
 
 
-class ListCertView(ListView):
+class ListCertificateView(ListView):
 
     template_name = 'certificate/list.html'
     model = Certificate
@@ -81,14 +74,15 @@ class ListCertView(ListView):
         return self.model.objects.filter(emitter=self.request.user)
     
 
-class SearchCertView(ListView):
+class SearchCertificateView(ListView):
 
     model = Certificate
     template_name = 'certificate/list.html'
     
     def get_queryset(self):
-        name = self.request.GET.get('name', '')
-        inter_num = self.request.GET.get('inter_num', None)
+        request = self.request.GET.get
+        name =request('name')
+        inter_num = request('inter_num')
         qs =  Certificate.objects.all().filter(emitter=self.request.user)
         if name:
             qs = qs.filter(name__icontains=name)
@@ -97,9 +91,9 @@ class SearchCertView(ListView):
         return qs
 
 
-class DeleteCertView(DeleteView):
+class DeleteCertificateView(DeleteView):
     model = Certificate
     template_name = 'confirm_delete.html'
 
     def get_success_url(self):
-        return reverse_lazy("list")
+        return reverse_lazy("list_of_certificates")
