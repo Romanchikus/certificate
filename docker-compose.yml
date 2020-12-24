@@ -1,0 +1,64 @@
+version: '3'
+
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
+  static_volume:
+  redis: {}
+
+services:
+  certificate:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: certificate
+    container_name: certificate
+    depends_on:
+      - postgres
+      # - redis
+    volumes:
+      - .:/certificate
+      - static_volume:/certificate/static
+    # expose:
+    #   - 8000
+    ports:
+      - "8008:8008"
+    env_file:
+      - ./.envs/.django
+      - ./.envs/.postgres
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: certificate_production_postgres
+    container_name: certificate_postgres
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+      - local_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.postgres
+    ports:
+      - "5432:5432"
+      
+  # redis:
+  #   restart: always
+  #   image: "redis:alpine"
+  #   volumes:
+  #     - ./redis.conf:/usr/local/etc/redis/redis.conf 
+  #     - "redis:/data"
+  #   ports:
+  #     - "6379:6379"
+  #   command: redis-server /usr/local/etc/redis/redis.conf
+  
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/certificate/static
+    ports:
+      - 8009:8003
+    depends_on:
+      - certificate
+    # links:
+    #   - redis
