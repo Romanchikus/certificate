@@ -1,9 +1,9 @@
 build:
   docker:
-    web: Dockerfile
+    certi: Dockerfile
 run:
-  web: gunicorn certificate.wsgi:application --bind 0.0.0.0:$PORT
+  certi: gunicorn certificate.wsgi:application --bind 0.0.0.0:$PORT
 release:
-  image: web
+  image: certi
   command:
     - python manage.py collectstatic --noinput
