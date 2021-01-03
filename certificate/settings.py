@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,7 @@ SECRET_KEY = 's@_jf_^9^bmp5*7vf_ezpk75itc+6qsphey1u-jw5rr3l9hvzo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -75,18 +76,29 @@ WSGI_APPLICATION = 'certificate.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": os.environ.get(
+#             "SQL_ENGINE", "django.db.backends.postgresql_psycopg2"
+#         ),
+#         "NAME": os.environ.get("POSTGRES_DB", os.path.join(BASE_DIR, "certificate")),
+#         "USER": os.environ.get("POSTGRES_USER", "certificate"),
+#         "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "certificate"),
+#         "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
+#         "PORT": os.environ.get("POSTGRES_PORT", "5432"),
+#     }
+# }
+
 DATABASES = {
-    "default": {
-        "ENGINE": os.environ.get(
-            "SQL_ENGINE", "django.db.backends.postgresql_psycopg2"
-        ),
-        "NAME": os.environ.get("POSTGRES_DB", os.path.join(BASE_DIR, "certificate")),
-        "USER": os.environ.get("POSTGRES_USER", "certificate"),
-        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "certificate"),
-        "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
-        "PORT": os.environ.get("POSTGRES_PORT", "5432"),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+DATABASE_URL = os.environ.get('DATABASE_URL')
+db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500, ssl_require=True)
+DATABASES['default'].update(db_from_env)
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
