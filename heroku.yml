@@ -12,4 +12,4 @@ release:
     - python manage.py collectstatic --noinput
 
 run:
-  certi: gunicorn certificate.wsgi:application --bind 0.0.0.0:$PORT
+  web: gunicorn certificate.wsgi:application --bind 0.0.0.0:$PORT
