@@ -1,9 +1,15 @@
+setup:
+  addons:
+    - plan: heroku-postgresql
+
 build:
   docker:
-    certi: Dockerfile
-run:
-  certi: gunicorn certificate.wsgi:application --bind 0.0.0.0:$PORT
+    web: Dockerfile
+
 release:
-  image: certi
+  image: web
   command:
     - python manage.py collectstatic --noinput
+
+run:
+  certi: gunicorn certificate.wsgi:application --bind 0.0.0.0:$PORT
