@@ -26,6 +26,8 @@ SECRET_KEY = 's@_jf_^9^bmp5*7vf_ezpk75itc+6qsphey1u-jw5rr3l9hvzo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') 
+
 ALLOWED_HOSTS = ['*','https://certificate13.herokuapp.com/', 'certificate13.herokuapp.com']
 
 
