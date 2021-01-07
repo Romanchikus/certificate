@@ -43,6 +43,6 @@ COPY . $APP_HOME
 # USER myuser
 RUN python manage.py collectstatic --noinput
 # run gunicorn
-CMD gunicorn certificate.wsgi:application --bind 0.0.0.0:$PORT
+CMD pipenv gunicorn certificate.wsgi:application --bind 0.0.0.0:$PORT
 
 # ENTRYPOINT ["/entrypoint"]
