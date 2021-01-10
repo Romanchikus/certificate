@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
-import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,9 +25,7 @@ SECRET_KEY = 's@_jf_^9^bmp5*7vf_ezpk75itc+6qsphey1u-jw5rr3l9hvzo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') 
-
-ALLOWED_HOSTS = ['*','https://certificate13.herokuapp.com/', 'certificate13.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -39,7 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'cert_app.apps.CertAppConfig',
@@ -53,7 +49,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'certificate.urls'
@@ -76,9 +71,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'certificate.wsgi.application'
 
-DATABASE_URL = os.environ.get('DATABASE_URL')
-db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500, ssl_require=True)
-DATABASES['default'].update(db_from_env)
+
+# Database
+# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+
+DATABASES = {}
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
@@ -115,12 +112,11 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Imagedocker stop django-herokus)
+# Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = 'certificate/static'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
