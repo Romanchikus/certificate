@@ -80,21 +80,6 @@ WSGI_APPLICATION = 'certificate.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": os.environ.get(
-#             "SQL_ENGINE", "django.db.backends.postgresql_psycopg2"
-#         ),
-#         "NAME": os.environ.get("POSTGRES_DB", os.path.join(BASE_DIR, "certificate")),
-#         "USER": os.environ.get("POSTGRES_USER", "certificate"),
-#         "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "certificate"),
-#         "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
-#         "PORT": os.environ.get("POSTGRES_PORT", "5432"),
-#     }
-# }
-
-# 
-
 DATABASE_URL = os.environ.get('DATABASE_URL')
 db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500, ssl_require=True)
 DATABASES = {
