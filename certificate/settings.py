@@ -93,13 +93,16 @@ WSGI_APPLICATION = 'certificate.wsgi.application'
 #     }
 # }
 
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 DATABASE_URL = os.environ.get('DATABASE_URL')
 db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500, ssl_require=True)
-DATABASES = {
-    'default': db_from_env
-}
+DATABASES['default'].update(db_from_env)
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
