@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Certificate
 from django.views.generic import TemplateView, CreateView, DetailView, UpdateView, ListView, DeleteView, View
 from .forms import PreCertificate
 from django.urls import reverse, reverse_lazy
-from django.shortcuts import redirect
 from users.models import CustomUser
+from django.http import Http404
+from django.core.exceptions import ValidationError
 
 from django.http import  HttpResponseRedirect
 
@@ -97,3 +98,16 @@ class DeleteCertificateView(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy("list_of_certificates")
+
+
+class FoundCertificateView(View):
+    
+    def dispatch(self, request, *args, **kwargs):
+        public_num = self.request.GET.get('public_num')   
+        try:
+            cert =  get_object_or_404(Certificate, public_num=public_num)
+        except ValidationError:
+            raise Http404("Poll does not exist") 
+        
+        return redirect('certificate_info', pk=cert.pk)
+    

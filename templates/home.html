@@ -2,6 +2,16 @@
 
 {% block content %}
 
-    <h1 class='text-center'>Found certificate</h1>   
-    
+<h1 class='text-center'>Enter certificate number</h1>
+
+        <form action="{% url 'check_certificate' %}" method="get" class="mx-1 my-1"> {% csrf_token %}
+            <div class="text-center">
+                <input class="bg-light rounded mx-1" name="public_num" type="text" placeholder="Public number">
+                <button class="float-sm-right btn-sm btn-primary" type="submit">
+                    <span class="oi oi-check"></span>
+                </button>
+            </div>
+        </form>
+
+
 {% endblock content %}

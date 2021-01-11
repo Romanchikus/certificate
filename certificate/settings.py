@@ -80,8 +80,13 @@ WSGI_APPLICATION = 'certificate.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASE_URL = os.environ.get('DATABASE_URL')
-db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500, ssl_require=True)
+ON_HEROKU = os.environ.get('ON_HEROKU')
+if ON_HEROKU:
+    DATABASE_URL = os.environ.get('DATABASE_URL')
+    db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500, ssl_require=True)
+else:
+    DATABASE_URL = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+    db_from_env = dj_database_url.config(default=DATABASE_URL, conn_max_age=500)
 DATABASES = {
     'default': db_from_env
 }

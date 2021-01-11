@@ -3,10 +3,10 @@
 
 {% block content %}
 
-<div class="table offset-3 col-md-5">
-    <table>
+<div>
+    <table class="table text-left">
         <tr>
-            <td><label for="disabledInput">Internal number</label>
+            <td><label for="disabledInput">Found certificate created by</label>
                 <input type="text" readonly class="form-control-plaintext bg-success rounded" id="staticEmail"
                     value="{{object.name}}"></td>
         </tr>
@@ -29,7 +29,7 @@
             <td>
                 <label for="disabledInput">PDF</label>
                 {% if  object.pdf %}
-                <a class="btn btn-outline-info btn-sm float-right mr-2" href="{{ object.pdf.url}}" role="button"
+                <a class="btn btn-outline-info btn-sm mr-2" href="{{ object.pdf.url}}" role="button"
                     download><span class="oi oi-data-transfer-download"></span></a>
                 {%else%}
                 <label for="disabledInput">No exist</label>
@@ -40,7 +40,7 @@
         <tr>
             <td>
                 Reviews
-                <span class="bg-success table-bordered float-right mr-2">{{object.views_count}}</span>
+                <span class="bg-success table-bordered mr-2">{{object.views_count}}</span>
             </td>
         </tr>
     </table>

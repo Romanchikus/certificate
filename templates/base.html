@@ -16,14 +16,13 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg text-center">
+    <div class="container-fluid bg-secondary">
+        <nav class="navbar navbar-expand-lg ">
           <div class="container-fluid">
-            <ul class="nav navbar-nav container">
-              <li></li><a class="navbar-brand custom_title" href="#">CERT</a></li>
-              <li><a id="len1" class="hoverable m-1 nav-item nav-link btn border-0" href="{% url 'home' %}"">Home</a></li>
-              <li><a id="len2" class="hoverable m-1 nav-item nav-link btn border-0" href="#">About</a></li>
+            <ul class="nav navbar-nav container justify-content-center">
+              <li></li><a class="navbar-brand custom_title" href="{% url 'home' %}">CERT</a></li>
               {% if user.is_authenticated %}
+              <li><a id="len2" class="hoverable m-1 nav-item nav-link btn border-0" href="#">Profile</a></li>
               <li><a id="len3" class="hoverable m-1 nav-item nav-link btn border-0" href="{% url 'list_of_certificates' %}">Certificates</a></li>
               <li><a id="len4" class="hoverable m-1 nav-item nav-link btn border-0" href="{% url 'logout' %}">Log out</a></li>
               {% else %}
@@ -40,9 +39,11 @@
           </div>
         </div>
       </div>
-    <div class="container">
+    <div class="container d-flex justify-content-center ">
+      <div class="col-md-6 text-center">
         {% block content %}
         {% endblock content %}
+      </div>
     </div>
     
 </body>

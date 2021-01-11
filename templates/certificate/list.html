@@ -6,7 +6,6 @@
 
 
 {% block content %}
-<div class=" offset-3 col-md-5">
   <div class=" text-center">
     <form method="POST" action="{% url 'create_certificate' %}" id="cert-form">
       {% csrf_token %}Create certificate
@@ -54,5 +53,4 @@
         <tr class="list-group-item">No certificates yet.</tr>
       {% endfor %}
   </table>
-</div>
 {% endblock content %}
