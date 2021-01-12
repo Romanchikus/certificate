@@ -104,3 +104,8 @@ nav li a {
 .custom_title:hover{
   color: black;
 }
+
+.text-family{
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+}

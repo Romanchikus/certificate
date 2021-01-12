@@ -5,28 +5,28 @@
 
 <div>
     <table class="table text-left">
-        <tr>
-            <td><label for="disabledInput">Found certificate created by</label>
+        <tr class="h5">
+            <td class="p-1"><label for="disabledInput">Found certificate created by</label>
                 <input type="text" readonly class="form-control-plaintext bg-success rounded" id="staticEmail"
                     value="{{object.name}}"></td>
         </tr>
-        <tr>
-            <td>
+        <tr class="h5">
+            <td class="p-1">
                 <label for="disabledInput">Internal number</label>
                 <input type="text" readonly class="form-control-plaintext bg-success rounded" id="staticEmail"
                     value="{{object.internal_num}}">
             </td>
         </tr>
-        <tr>
-            <td>
+        <tr class="h5">
+            <td class="p-1">
                 <label for="disabledInput">Public number</label>
                 <input type="text" readonly class="form-control-plaintext bg-success rounded" id="staticEmail"
                     value="{{object.public_num}}">
             </td>
         </tr>
-        <tr>
+        <tr class="h5">
 
-            <td>
+            <td class="p-1">
                 <label for="disabledInput">PDF</label>
                 {% if  object.pdf %}
                 <a class="btn btn-outline-info btn-sm mr-2" href="{{ object.pdf.url}}" role="button"
@@ -37,8 +37,8 @@
 
             </td>
         </tr>
-        <tr>
-            <td>
+        <tr class="h5">
+            <td class="p-1">
                 Reviews
                 <span class="bg-success table-bordered mr-2">{{object.views_count}}</span>
             </td>
