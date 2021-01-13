@@ -6,6 +6,7 @@ from django.urls import reverse, reverse_lazy
 from users.models import CustomUser
 from django.http import Http404
 from django.core.exceptions import ValidationError
+from django.views.defaults import page_not_found
 
 from django.http import  HttpResponseRedirect
 
@@ -115,15 +116,6 @@ class FoundCertificateView(View):
         
         return redirect('certificate_info', pk=cert.pk)
 
-# class PageNotFoundView(TemplateView):
-#     template_name = '404.html'
-# from django.shortcuts import (
-# render_to_response
-# )
-# from django.template import RequestContext
-# def custom_page_not_found_view(request):
-
-from django.views.defaults import page_not_found
 
 def handler_404(request, exception):
     return page_not_found(request, exception, template_name="404.html")
