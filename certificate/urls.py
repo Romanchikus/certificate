@@ -11,3 +11,7 @@ urlpatterns = [
     path('', include('cert_app.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
            ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+from django.conf.urls import handler404
+from cert_app import views
+handler404 = views.handler_404

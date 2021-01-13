@@ -48,11 +48,15 @@ class DetailsCertificateView(DetailView):
     template_name = 'certificate/detail.html'
     model = Certificate
 
-    def dispatch(self, request, *args, **kwargs):
-        cert = Certificate.objects.filter(pk=kwargs["pk"]).first()
+    def get_object(self, queryset=None):
+        if self.request.GET.get('check'):
+            print(self.request.GET.get('public_num'))
+            cert = Certificate.objects.filter(public_num=self.request.GET.get('public_num')).first()
+        else:
+            cert = Certificate.objects.filter(pk=self.kwargs["pk"]).first()
         cert.views_count +=1
         cert.save()
-        return super().dispatch(request, *args, **kwargs)
+        return super().get_object()
 
 
 class ListCertificateView(ListView):
@@ -110,4 +114,16 @@ class FoundCertificateView(View):
             raise Http404("Poll does not exist") 
         
         return redirect('certificate_info', pk=cert.pk)
-    
+
+# class PageNotFoundView(TemplateView):
+#     template_name = '404.html'
+# from django.shortcuts import (
+# render_to_response
+# )
+# from django.template import RequestContext
+# def custom_page_not_found_view(request):
+
+from django.views.defaults import page_not_found
+
+def handler_404(request, exception):
+    return page_not_found(request, exception, template_name="404.html")
