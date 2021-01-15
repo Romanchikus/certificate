@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Certificate
 from django.views.generic import TemplateView, CreateView, DetailView, UpdateView, ListView, DeleteView, View
 from .forms import PreCertificate
 from django.urls import reverse, reverse_lazy
-from django.shortcuts import redirect
 from users.models import CustomUser
+from django.http import Http404
+from django.core.exceptions import ValidationError
+from django.views.defaults import page_not_found
 
 from django.http import  HttpResponseRedirect
 
@@ -47,11 +49,14 @@ class DetailsCertificateView(DetailView):
     template_name = 'certificate/detail.html'
     model = Certificate
 
-    def dispatch(self, request, *args, **kwargs):
-        cert = Certificate.objects.filter(pk=kwargs["pk"]).first()
+    def get_object(self, queryset=None):
+        if self.request.GET.get('check'):
+            cert = get_object_or_404( Certificate, public_num=self.request.GET.get('public_num'))
+        else:
+            cert = Certificate.objects.get(pk=self.kwargs["pk"])
         cert.views_count +=1
         cert.save()
-        return super().dispatch(request, *args, **kwargs)
+        return cert
 
 
 class ListCertificateView(ListView):
@@ -97,3 +102,19 @@ class DeleteCertificateView(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy("list_of_certificates")
+
+
+class FoundCertificateView(View):
+    
+    def dispatch(self, request, *args, **kwargs):
+        public_num = self.request.GET.get('public_num')   
+        try:
+            cert =  get_object_or_404(Certificate, public_num=public_num)
+        except ValidationError:
+            raise Http404("Poll does not exist") 
+        
+        return redirect('certificate_info', pk=cert.pk)
+
+
+def handler_404(request, exception):
+    return page_not_found(request, exception, template_name="404.html")

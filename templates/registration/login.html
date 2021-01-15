@@ -5,7 +5,16 @@
 <h2>Log In</h2>
 <form method="post" class='col-md-6 offset-3 text-center'>
     {% csrf_token %}
-    {{ form.as_p }}
+    <table>
+        <tr>
+            <td>{{ form.username.label_tag }}</td>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.password.label_tag }}</td>
+            <td>{{ form.password }}</td>
+        </tr>
+    </table>
     <button class='btn btn-primary' type="submit">Log In</button>
 </form>
 {%endblock content%}

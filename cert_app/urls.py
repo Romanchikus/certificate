@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CreateCertificateView, HomePageView, DetailsCertificateView, AddCertificateView, ListCertificateView, DeleteCertificateView, SearchCertificateView
+from .views import CreateCertificateView, HomePageView, DetailsCertificateView, AddCertificateView, ListCertificateView, DeleteCertificateView, SearchCertificateView, FoundCertificateView
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
@@ -7,6 +7,7 @@ urlpatterns = [
     path('certificates/create',CreateCertificateView.as_view(), name='create_certificate'),
     path('certificates/add/<int:pk>/', AddCertificateView.as_view(), name='add_certificate'),
     path('certificates/<int:pk>/', DetailsCertificateView.as_view(), name='certificate_info'),
+    path('detail', FoundCertificateView.as_view(), name='check_certificate'),
     path('certificates/delete/<int:pk>/', DeleteCertificateView.as_view(), name='delete_certificate'),
     path('certificates/search', SearchCertificateView.as_view(), name='search_certificates'),
 ]
