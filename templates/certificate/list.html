@@ -8,19 +8,19 @@
 {% block content %}
   <div class=" text-center">
     <form method="POST" action="{% url 'create_certificate' %}" id="cert-form">
-      {% csrf_token %}Create certificate
-      <button class='btn btn-primary m-1 ' type="submit">
+      {% csrf_token %}<span class="h3 mt-4"> Add certificate </span>
+      <button class='btn btn-primary ml-1 ' type="submit">
         <span class="oi" data-glyph="plus"></span>
       </button>
   </form>
-  <form action="{% url 'search_certificates' %}" method="get" class="row  mx-1 my-1"> {% csrf_token %}
-    <div>
-      <input class="bg-light rounded col-sm-3 " name="name" type="text" placeholder="for name">
-      <input class="bg-light rounded col-sm-5" name="inter_num" type="text" placeholder="for internal number">
-      <button class="float-sm-right btn-sm btn-primary" type="submit">
+  <form action="{% url 'search_certificates' %}" method="get" class="row  mx-1 my-1 d-flex justify-content-center"> {% csrf_token %}
+    
+      <input class="bg-light rounded col-sm-5 " name="name" type="text" placeholder="for name">
+      <input class="bg-light rounded col-sm-5 mx-1" name="inter_num" type="text" placeholder="for internal number">
+      <button class="col-sm-1 float-sm-right btn-sm btn-primary" type="submit">
         <span class="oi oi-check"></span>
       </button>
-    </div> </form>
+  </form>
 </div>
   <table class="table">
     <thead class="thead-dark">
@@ -33,16 +33,16 @@
       </tr>
     </thead>
     {% for cert in object_list %}
-      <tr class="text-center">
-        <td class="col-sm-2 alert-primary">
+      <tr class="text-center ">
+        <td class="col-sm-2 alert-secondary">
           <a class="alert-link" href="{% url 'certificate_info' cert.pk %}">{{ cert.name }}</a>
         </td>
-        <td class="col-sm-2  alert-success"><span><a class="float-left alert-link" href="{% url 'certificate_info' cert.pk %}">
+        <td class="col-sm-2 alert-secondary"><span><a class="float-left alert-link" href="{% url 'certificate_info' cert.pk %}">
           {{ cert.internal_num }}</a></span></td>
-        <td class="col-sm-2  alert-dark"><small><a class="float-left  alert-link " href="{% url 'certificate_info' cert.pk %}">
+        <td class="col-sm-2 alert-secondary"><small><a class="float-left  alert-link " href="{% url 'certificate_info' cert.pk %}">
             {{ cert.public_num}}</a></small></td>
-        <td class="col-sm-2 alert-info">{{ cert.views_count}}</td>
-        <td class="col-sm-2">
+        <td class="col-sm-2 alert-secondary">{{ cert.views_count}}</td>
+        <td class="col-sm-2 alert-secondary">
           <a class="btn btn-danger mx-1 my-1 btn-sm " href="{% url 'delete_certificate' cert.pk %}"
           role="button"><span class="oi oi-trash"></span></a>
           <a class="btn btn-warning  btn-sm  mx-1 my-1" href="{% url 'add_certificate' cert.pk %}"

@@ -6,6 +6,7 @@ from django.urls import reverse, reverse_lazy
 from users.models import CustomUser
 from django.http import Http404
 from django.core.exceptions import ValidationError
+from django.views.defaults import page_not_found
 
 from django.http import  HttpResponseRedirect
 
@@ -48,11 +49,14 @@ class DetailsCertificateView(DetailView):
     template_name = 'certificate/detail.html'
     model = Certificate
 
-    def dispatch(self, request, *args, **kwargs):
-        cert = Certificate.objects.filter(pk=kwargs["pk"]).first()
+    def get_object(self, queryset=None):
+        if self.request.GET.get('check'):
+            cert = get_object_or_404( Certificate, public_num=self.request.GET.get('public_num'))
+        else:
+            cert = Certificate.objects.get(pk=self.kwargs["pk"])
         cert.views_count +=1
         cert.save()
-        return super().dispatch(request, *args, **kwargs)
+        return cert
 
 
 class ListCertificateView(ListView):
@@ -110,4 +114,7 @@ class FoundCertificateView(View):
             raise Http404("Poll does not exist") 
         
         return redirect('certificate_info', pk=cert.pk)
-    
+
+
+def handler_404(request, exception):
+    return page_not_found(request, exception, template_name="404.html")
