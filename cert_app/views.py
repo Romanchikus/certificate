@@ -51,13 +51,12 @@ class DetailsCertificateView(DetailView):
 
     def get_object(self, queryset=None):
         if self.request.GET.get('check'):
-            print(self.request.GET.get('public_num'))
-            cert = Certificate.objects.filter(public_num=self.request.GET.get('public_num')).first()
+            cert = get_object_or_404( Certificate, public_num=self.request.GET.get('public_num'))
         else:
-            cert = Certificate.objects.filter(pk=self.kwargs["pk"]).first()
+            cert = Certificate.objects.get(pk=self.kwargs["pk"])
         cert.views_count +=1
         cert.save()
-        return super().get_object()
+        return cert
 
 
 class ListCertificateView(ListView):
