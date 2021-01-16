@@ -3,9 +3,9 @@ from django.contrib.auth.models import AbstractUser
 from rest_framework_api_key.crypto import KeyGenerator
 
 class CustomUser(AbstractUser):
-    company_name = models.CharField(max_length=70)
-    api_key = models.CharField(max_length=50, editable=False, unique=True)
-    hashed_key = models.CharField(max_length=50, editable=False, unique=True)
+    company_name = models.CharField(max_length=255)
+    api_key = models.CharField(max_length=255, editable=False, unique=True)
+    hashed_key = models.CharField(max_length=255, editable=False, unique=True)
     REQUIRED_FIELDS = ['company_name']
 
     def save(self, *args, **kwargs):
