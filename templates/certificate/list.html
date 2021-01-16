@@ -15,8 +15,8 @@
   </form>
   <form action="{% url 'search_certificates' %}" method="get" class="row  mx-1 my-1 d-flex justify-content-center"> {% csrf_token %}
     
-      <input class="bg-light rounded col-sm-5 " name="name" type="text" placeholder="for name">
-      <input class="bg-light rounded col-sm-5 mx-1" name="inter_num" type="text" placeholder="for internal number">
+      <input class="bg-light rounded col-sm-5 text-family" name="name" type="text" placeholder="Enter name">
+      <input class="bg-light rounded col-sm-5 mx-1 text-family" name="inter_num" type="text" placeholder="Enter internal number">
       <button class="col-sm-1 float-sm-right btn-sm btn-primary" type="submit">
         <span class="oi oi-check"></span>
       </button>
@@ -50,7 +50,9 @@
      </td>
       </tr>
     {% empty %}
-        <tr class="list-group-item">No certificates yet.</tr>
+    <tr class="col-md-12 alert-secondary">
+      <td colspan="5" >No certificates yet.</td>
+    </tr>
       {% endfor %}
   </table>
 {% endblock content %}

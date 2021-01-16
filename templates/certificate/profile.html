@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock title %}
+{% block content %}
+
+<h2>Profile</h2>
+<form method="POST" class="search-job">
+    {% csrf_token %}
+    <table class="table">
+        <tr class="h5 ">
+            {{ form.subject.errors }}
+            <td><label for="disabledInput">{{ form.company_name.label_tag }}</label></td>
+            <td>
+                {{ form.company_name }}
+            </td>
+        </tr>
+        <tr class="h5">
+            <td>API key</td>
+            <td>
+                <input type="text" readonly class="form-control-plaintext bg-success rounded h6" id="staticEmail"
+                    value="{{ object.api_key }}">
+            </td>
+        </tr>
+        <tr class="h5">
+            <td class="float-right">
+                <a href="{% url 'home' %}" class="h5 btn btn-secondary text-dark"> Cancel</a>
+            </td>
+            <td>
+                <button class='mx-auto btn btn-success text-dark ml-1 h5' type="submit">
+                    Save
+                </button>
+            </td>
+        </tr>
+
+
+    </table>
+
+</form>
+{% endblock content %}

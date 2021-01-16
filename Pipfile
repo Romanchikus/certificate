@@ -13,6 +13,8 @@ psycopg2-binary = "==2.8.6"
 dj-database-url = "*"
 gunicorn = "*"
 whitenoise = "*"
+djangorestframework-api-key = "*"
+djangorestframework = "*"
 
 [requires]
 python_version = "3.7"

@@ -22,7 +22,7 @@
             <div class="container justify-content-center text-center">
               <div class="mx-1 d-inline-block"><a class="navbar-brand custom_title" href="{% url 'home' %}">CERT</a></div>
               {% if user.is_authenticated %}
-              <div class="mx-1 d-inline-block"><a id="len2" class="hoverable px-1 text-dark h5" href="#">Profile</a></div>
+              <div class="mx-1 d-inline-block"><a id="len2" class="hoverable px-1 text-dark h5" href="{% url 'profile' %}">Profile</a></div>
               <div class="mx-1 d-inline-block"><a id="len3" class="hoverable px-1 text-dark h5" href="{% url 'list_of_certificates' %}">Certificates</a></div>
               <div class="mx-1 d-inline-block"><a id="len4" class="hoverable px-1 text-dark h5" href="{% url 'logout' %}">Log out</a></div>
               {% else %}

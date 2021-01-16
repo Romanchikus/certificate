@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Certificate
-from django.views.generic import TemplateView, CreateView, DetailView, UpdateView, ListView, DeleteView, View
+from django.views.generic import TemplateView, CreateView, DetailView, UpdateView, ListView, DeleteView, View, FormView
 from .forms import PreCertificate
 from django.urls import reverse, reverse_lazy
 from users.models import CustomUser
 from django.http import Http404
 from django.core.exceptions import ValidationError
 from django.views.defaults import page_not_found
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.http import  HttpResponseRedirect
+from . import forms
 
 class HomePageView(TemplateView):
     
@@ -118,3 +120,13 @@ class FoundCertificateView(View):
 
 def handler_404(request, exception):
     return page_not_found(request, exception, template_name="404.html")
+
+class ProfileView(LoginRequiredMixin, FormView, UpdateView):
+    template_name = 'certificate/profile.html'
+    model = CustomUser
+    form_class = forms.EditProfileForm
+    success_url = reverse_lazy('profile')
+    
+
+    def get_object(self, queryset=None):
+        return self.request.user
