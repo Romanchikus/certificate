@@ -7,10 +7,18 @@ import qrcode
 from io import StringIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.exceptions import ValidationError
+from random import randrange
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/public_num/<filename>
     return 'user_{0}/{1}'.format(instance.public_num, filename)
+
+def generate_random_unique_internal_num():
+    random_number = randrange(1000)
+
+    while Certificate.objects.filter(internal_num=random_number):
+        random_number = randrange(1000)
+    return random_number
 
 class CertificateManager(models.Manager):
 
@@ -26,8 +34,8 @@ class Certificate(models.Model):
 
     name = models.CharField("name", max_length=50)
     emitter = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    internal_num = models.CharField(max_length=50, default=uuid.uuid4, editable=True)
-    public_num = models.UUIDField(default=uuid.uuid4, editable=False)
+    internal_num = models.CharField(max_length=50, default=generate_random_unique_internal_num)
+    public_num = models.UUIDField(default=uuid.uuid4)
     qr_code = models.ImageField(upload_to='qr_codes', blank=True)
     is_published = models.BooleanField(default=False)
     pdf = models.FileField(upload_to=user_directory_path,blank=True, null=True)

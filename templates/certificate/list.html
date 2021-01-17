@@ -9,7 +9,7 @@
   <div class=" text-center">
     <form method="POST" action="{% url 'create_certificate' %}" id="cert-form">
       {% csrf_token %}<span class="h3 mt-4"> Add certificate </span>
-      <button class='btn btn-primary ml-1 ' type="submit">
+      <button class='btn btn-primary ml-1 pt-2 ' type="submit">
         <span class="oi" data-glyph="plus"></span>
       </button>
   </form>
@@ -17,8 +17,8 @@
     
       <input class="bg-light rounded col-sm-5 text-family" name="name" type="text" placeholder="Enter name">
       <input class="bg-light rounded col-sm-5 mx-1 text-family" name="inter_num" type="text" placeholder="Enter internal number">
-      <button class="col-sm-1 float-sm-right btn-sm btn-primary" type="submit">
-        <span class="oi oi-check"></span>
+      <button class="col-sm-1 float-sm-right btn-sm btn-primary pt-2" type="submit">
+        <span class="oi" data-glyph="check"></span>
       </button>
   </form>
 </div>
@@ -43,10 +43,10 @@
             {{ cert.public_num}}</a></small></td>
         <td class="col-sm-2 alert-secondary">{{ cert.views_count}}</td>
         <td class="col-sm-2 alert-secondary">
-          <a class="btn btn-danger mx-1 my-1 btn-sm " href="{% url 'delete_certificate' cert.pk %}"
-          role="button"><span class="oi oi-trash"></span></a>
-          <a class="btn btn-warning  btn-sm  mx-1 my-1" href="{% url 'add_certificate' cert.pk %}"
-              role="button"><span class="oi oi-pencil "></span></a>
+          <a class="btn btn-danger mx-1 my-1 btn-sm  pt-2" href="{% url 'delete_certificate' cert.pk %}"
+          role="button"><span class="oi" data-glyph="trash"></span></a>
+          <a class="btn btn-warning  btn-sm  mx-1 my-1 pt-2" href="{% url 'add_certificate' cert.pk %}"
+              role="button"><span class="oi" data-glyph="pencil"></span></a>
      </td>
       </tr>
     {% empty %}

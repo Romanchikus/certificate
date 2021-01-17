@@ -12,6 +12,6 @@ urlpatterns = [
     path('accounts/', include('users.urls')),
     path('', include('cert_app.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
-           ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+           )+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 handler404 = views.handler_404

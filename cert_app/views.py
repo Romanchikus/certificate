@@ -35,7 +35,8 @@ class AddCertificateView(UpdateView):
 
     template_name = 'certificate/add.html'
     model = Certificate
-    fields = ['name', 'is_published', 'pdf', 'internal_num']
+    form_class = PreCertificate
+    readonly_fields=('public_num',)
 
     def get_success_url(self):
         return reverse('list_of_certificates')
