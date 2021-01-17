@@ -122,7 +122,7 @@ class FoundCertificateView(View):
 def handler_404(request, exception):
     return page_not_found(request, exception, template_name="404.html")
 
-class ProfileView(LoginRequiredMixin, FormView, UpdateView):
+class ProfileView(LoginRequiredMixin,  UpdateView):
     template_name = 'certificate/profile.html'
     model = CustomUser
     form_class = forms.EditProfileForm

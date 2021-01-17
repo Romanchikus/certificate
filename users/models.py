@@ -9,5 +9,6 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = ['company_name']
 
     def save(self, *args, **kwargs):
-        self.api_key, _, self.hashed_key = KeyGenerator(prefix_length=8, secret_key_length=32).generate()
+        if not self.hashed_key:
+            self.api_key, _, self.hashed_key = KeyGenerator(prefix_length=8, secret_key_length=32).generate()
         super(CustomUser, self).save(*args, **kwargs)
