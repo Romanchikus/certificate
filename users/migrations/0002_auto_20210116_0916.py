@@ -6,26 +6,30 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0001_initial'),
+        ("users", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='customuser',
-            name='api_key',
-            field=models.CharField(default=1, editable=False, max_length=50, unique=True),
+            model_name="customuser",
+            name="api_key",
+            field=models.CharField(
+                default=1, editable=False, max_length=50, unique=True
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='customuser',
-            name='company_name',
+            model_name="customuser",
+            name="company_name",
             field=models.CharField(default=1, max_length=70),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='customuser',
-            name='hashed_key',
-            field=models.CharField(default=1, editable=False, max_length=50, unique=True),
+            model_name="customuser",
+            name="hashed_key",
+            field=models.CharField(
+                default=1, editable=False, max_length=50, unique=True
+            ),
             preserve_default=False,
         ),
     ]

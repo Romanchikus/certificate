@@ -29,8 +29,8 @@
             <td class="p-1">
                 <label for="disabledInput">PDF</label>
                 {% if  object.pdf %}
-                <a class="btn btn-outline-info btn-sm mr-2" href="{{ object.pdf.url}}" role="button"
-                    download><span class="oi oi-data-transfer-download"></span></a>
+                <a class="btn btn-outline-info btn-sm mr-2" href="{{ object.pdf.url}}" role="button" download><span
+                        class="oi oi-data-transfer-download"></span></a>
                 {%else%}
                 <label for="disabledInput">No exist</label>
                 {%endif%}

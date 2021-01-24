@@ -23,10 +23,10 @@
         {% endfor %}
     </table>
     <div>
-        <button class='btn btn-primary' href="{% url 'delete_certificate' object.pk %}">
-            Cancel</button>
-        <button class='btn btn-primary mx-5' type="submit">Save</button>
-        <input class='btn btn-primary' value='Publish' type="submit"
+        <a class='btn btn-outline-danger text-dark' href="{% url 'delete_certificate' object.pk %}">
+            Delete</a>
+        <button class='btn btn-outline-success mx-5' type="submit">Save</button>
+        <input class='btn btn-outline-primary' value='Publish' type="submit"
             formaction="{% url 'publish_certificate' object.pk %}">
     </div>
 </form>
