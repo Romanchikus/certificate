@@ -4,15 +4,15 @@
 
 <h1 class='text-center'>Enter certificate number</h1>
 
-        <form action="{% url 'check_certificate' %}" method="get" class="mx-1 my-1"> {% csrf_token %}
-            <div class="justify-content-center d-flex">
-                <input class="bg-light rounded mx-1" name="public_num" type="text" placeholder="Public number">
-                <input class="d-none"  name="check" type="text" value="True">
-                <button class="float-sm-right btn-sm btn-primary" type="submit">
-                    <span class="oi oi-check"></span>
-                </button>
-            </div>
-        </form>
+<form action="{% url 'check_certificate' %}" method="get" class="mx-1 my-1"> {% csrf_token %}
+    <div class="justify-content-center d-flex">
+        <input class="bg-light rounded mx-1" name="public_num" type="text" placeholder="Public number">
+        <input class="d-none" name="check" type="text" value="True">
+        <button class="float-sm-right btn-sm btn-primary pt-2" type="submit">
+            <span class="oi" data-glyph="check"></span>
+        </button>
+    </div>
+</form>
 
 
 {% endblock content %}
