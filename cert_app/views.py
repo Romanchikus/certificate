@@ -36,15 +36,46 @@ class AddCertificateView(UpdateView):
     template_name = 'certificate/add.html'
     model = Certificate
     form_class = PreCertificate
-    readonly_fields=('public_num',)
 
     def get_success_url(self):
         return reverse('list_of_certificates')
     
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(AddCertificateView, self).get_context_data(**kwargs)
         context["object"] = self.object
         return context
+
+class PublishCertificateView(AddCertificateView):
+
+    def get_success_url(self):
+        print("*** get_success_url")
+        return reverse('list_of_certificates')
+
+    def get_initial(self):
+        print("*** get_initial", self)
+        initial = super(PublishCertificateView, self).get_initial()
+        initial['is_published'] = True
+        return initial
+    
+    def form_valid(self, form):
+        form.instance.is_published = True
+        return super(PublishCertificateView, self).form_valid(form)
+        # print("*** form_valid")
+        # self.object.is_published = (form.cleaned_data['is_published'])
+        # return super(PublishCertificateView, self).form_valid(form)
+
+    # # def get_context_data(self, **kwargs):
+    #     print("*** get_context_data")
+        
+    #     context = super(PublishCertificateView, self).get_context_data(**kwargs)
+    #     form = context['form']
+    #     print("Form:")
+    #     print(form)
+
+    #     form.fields["is_published"] = True
+    #     context['form'] = form
+    #     print(context['form'])
+    #     return context
 
 
 class DetailsCertificateView(DetailView):

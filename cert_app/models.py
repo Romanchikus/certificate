@@ -9,9 +9,9 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.exceptions import ValidationError
 from random import randrange
 
-def user_directory_path(instance, filename):
+def user_directory_path(certificate, filename):
     # file will be uploaded to MEDIA_ROOT/public_num/<filename>
-    return 'user_{0}/{1}'.format(instance.public_num, filename)
+    return  f"user_{certificate.public_num}/{filename}"
 
 def generate_random_unique_internal_num():
     random_number = randrange(1000)

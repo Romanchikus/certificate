@@ -22,20 +22,12 @@
         </tr>
         {% endfor %}
     </table>
-    <button class='btn btn-primary' href="{% url 'delete_certificate' object.pk %}">
-        Cancel</button>
-    <button class='btn btn-primary' onclick="publish()" type="submit">
-        Publish </button>
-    <button class='btn btn-primary' type="submit">Save<span class="oi" data-glyph="plus"></span></button>
+    <div>
+        <button class='btn btn-primary' href="{% url 'delete_certificate' object.pk %}">
+            Cancel</button>
+        <button class='btn btn-primary mx-5' type="submit">Save</button>
+        <input class='btn btn-primary' value='Publish' type="submit"
+            formaction="{% url 'publish_certificate' object.pk %}">
+    </div>
 </form>
-
-
-
-<script>
-    function publish() {
-        document.getElementById("id_is_published").checked = true;
-    }
-
-</script>
-
 {%endblock content%}
